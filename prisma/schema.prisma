@@ -30,7 +30,7 @@ model Book {
   quantity    Int
   description String
   bookPhoto   BookPhotos[]
-  author      Author       @relation(fields: [authorId], references: [id])
+  Author      Author       @relation(fields: [authorId], references: [id])
   authorId    String
   cartItem    CartItem[]
   Category    Category?    @relation(fields: [categoryId], references: [id])
@@ -67,8 +67,6 @@ model IssuedBook {
   returnDate DateTime
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
-
-  @@unique([userId, bookId])
 }
 
 model User {

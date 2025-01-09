@@ -7,7 +7,11 @@ import { IsNotEmpty, IsString, validateSync } from "class-validator";
 export const configData = (configService: ConfigService) => ({
     PORT:configService.get <string>("PORT"),
     DATABASES_URL:configService.get <string>("DATABASES_URL"),
-    JWT_SECRET:configService.get <string>("JWT_SECRET")
+    JWT_SECRET:configService.get <string>("JWT_SECRET"),
+    AWS_BUCKET:configService.get <string>("AWS_BUCKET"),
+    AWS_REGION:configService.get <string>("AWS_REGION"),
+    AWS_ACCESS_KEY_ID:configService.get <string>("AWS_ACCESS_KEY_ID"),
+    AWS_SECRET_ACCESS_KEY:configService.get <string>("AWS_SECRET_ACCESS_KEY"),
 })
 
 class RequiredVariable{
@@ -27,6 +31,29 @@ class RequiredVariable{
     @IsString()
     @IsNotEmpty()
     JWT_SECRET: string
+
+
+    @Expose()
+    @IsString()
+    @IsNotEmpty()
+    AWS_REGION: string
+
+
+    @Expose()
+    @IsString()
+    @IsNotEmpty()
+    AWS_BUCKET: string
+    
+    @Expose()
+    @IsString()
+    @IsNotEmpty()
+    AWS_ACCESS_KEY_ID: string
+
+
+    @Expose()
+    @IsString()
+    @IsNotEmpty()
+    AWS_SECRET_ACCESS_KEY: string
 }
 
 

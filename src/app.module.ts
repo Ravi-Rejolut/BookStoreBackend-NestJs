@@ -11,6 +11,7 @@ import { UtilsModule } from './utils/utils.module';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { ResponseInterceptor } from './interceptor/response.interceptor';
 import { BookModule } from './book/book.module';
+import { FileUploadModule } from './file-upload/file-upload.module';
 
 @Module({
   imports: [
@@ -21,7 +22,7 @@ import { BookModule } from './book/book.module';
     JwtModule.register({
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: CONSTANT.TOKEN_EXPIRY },
-    }), AuthModule, UtilsModule, BookModule],
+    }), AuthModule, UtilsModule, BookModule, FileUploadModule],
   controllers: [AppController],
   providers: [AppService, UtilsService,
     

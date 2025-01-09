@@ -34,6 +34,15 @@ export class BookRepository {
         }
     }
 
+    async updateCategory(params: { data: Prisma.CategoryUpdateInput, where: Prisma.CategoryWhereUniqueInput }) {
+        try {
+            return await this.prisma.category.update({ ...params })
+        }
+        catch (error) {
+            throw error
+        }
+    }
+
 
     async getAllCategories(
     ) {
@@ -59,13 +68,79 @@ export class BookRepository {
     }
 
 
-    async createAuthor(params:{data:Prisma.AuthorCreateInput}){
+    async createAuthor(params: { data: Prisma.AuthorCreateInput }) {
         try {
-            
+            return await this.prisma.author.create({ ...params })
         } catch (error) {
-            
+            throw new Error(MESSAGE.ERROR.AUTHOR.CREATION_FAILED);
         }
 
     }
 
+    async getBook(params: {
+        where: Prisma.BookWhereInput,
+        select?: Prisma.BookSelect,
+        include?: Prisma.BookInclude,
+    }) {
+        try {
+            return await this.prisma.book.findFirst({ ...params });
+
+        } catch (error) {
+            throw new Error(MESSAGE.ERROR.BOOK.FETCH_FAILED)
+        }
+    }
+
+    async addBookImageUrl(params: { data: Prisma.BookPhotosCreateInput }) {
+        try {
+            return await this.prisma.bookPhotos.create({ ...params })
+        } catch (error) {
+            throw new Error(MESSAGE.ERROR.BOOK.FAILED_IMAGE_UPLOAD)
+        }
+    }
+
+    async createBook(params: { data: Prisma.BookCreateInput }) {
+        try {
+            return await this.prisma.book.create({
+                ...params
+            })
+        } catch (error) {
+            console.log(error)
+            throw new Error(MESSAGE.ERROR.BOOK.CREATION_FAILED);
+        }
+    }
+
+    async updateBook(params: { where: Prisma.BookWhereUniqueInput, data: Prisma.BookUpdateInput, select?: Prisma.BookSelect, include?: Prisma.BookInclude }) {
+        try {
+            return await this.prisma.book.update({ ...params })
+        } catch (error) {
+            throw new Error(MESSAGE.ERROR.BOOK.FAILED_UPDATE)
+        }
+    }
+
+    async getBookImage(params: { where: Prisma.BookPhotosWhereUniqueInput, select?: Prisma.BookPhotosSelect, include?: Prisma.BookPhotosInclude }) {
+        try {
+
+            return this.prisma.bookPhotos.findUnique({ ...params })
+        } catch (error) {
+            throw error
+        }
+    }
+
+    async deleteBookImage(params:{where:Prisma.BookPhotosWhereUniqueInput}){
+        try {
+            return await this.prisma.bookPhotos.delete({ ...params })
+        } catch (error) {
+            throw error
+        }
+    }
+    async getAllBooks(params: {
+        where: Prisma.BookWhereInput,
+        select?: Prisma.BookSelect,
+        include?: Prisma.BookInclude
+
+    }) {
+
+        let include = params.include ? params.include : { Author: true, Category: true, bookPhoto: true };
+        return await this.prisma.book.findMany({ ...params, include });
+    }
 }
