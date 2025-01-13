@@ -50,6 +50,10 @@ export class BookRepository {
 
     }
 
+    async getAllAuthors()
+    {
+        return await this.prisma.author.findMany()
+    }
 
     async getAuthor(params: {
         where: Prisma.AuthorWhereUniqueInput,

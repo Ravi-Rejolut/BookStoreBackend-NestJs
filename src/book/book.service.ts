@@ -72,6 +72,14 @@ export class BookService {
     }
 
   }
+  async getAllAuthors(){
+    try {
+      
+      return await this.bookReposity.getAllAuthors();
+    } catch (error) {
+      throw new Error(MESSAGE.ERROR.AUTHOR.FETCH_FAILED)
+    }
+  }
   async createBook(body: CreateBookDto, images: Express.Multer.File[]) {
 
     try {

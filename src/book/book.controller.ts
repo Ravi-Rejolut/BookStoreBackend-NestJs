@@ -34,6 +34,12 @@ export class BookController {
   }
 
 
+  @Get("author")
+  async getAuthors() {
+    return await this.bookService.getAllAuthors();
+  }
+
+
   @UseGuards(AuthGuard("jwt"), new RoleGaurd(["ADMIN", "MANAGER"]))
   @Post()
   @UseInterceptors(FilesInterceptor('images'))
