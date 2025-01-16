@@ -76,17 +76,17 @@ model User {
   phone    String
   role     Role   @default(USER)
   password String
-  Cart     Cart[]
 
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @updatedAt
   IssuedBook IssuedBook[]
+  Cart       Cart?
 }
 
 model Cart {
   id        String     @id @default(uuid())
-  userId    String
-  user      User       @relation(fields: [userId], references: [id])
+  User      User       @relation(fields: [userId], references: [id])
+  userId    String     @unique
   CartItem  CartItem[]
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt

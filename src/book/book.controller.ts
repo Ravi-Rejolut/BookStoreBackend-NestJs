@@ -59,6 +59,8 @@ export class BookController {
   async deleteImage(@Param("id") id: string) {
     return await this.bookService.deleteBookImage(id);
   }
+
+  
   @UseGuards(AuthGuard("jwt"), new RoleGaurd(["ADMIN", "MANAGER"]))
   @Post(":id/image")
   @UseInterceptors(FilesInterceptor('images'))

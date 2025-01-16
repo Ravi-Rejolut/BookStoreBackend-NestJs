@@ -25,6 +25,12 @@ export const MESSAGE={
         FILE:{
             UPLOAD_FAILED:"Error Uploading File"
         },
+        CART:{
+            NOT_FOUND:"Cart Not Found",
+            ITEM:{
+                NOT_FOUND:"Cart Item Not Found",
+            }
+        },
         BOOK:{
             FETCH_FAILED:"Error Fetching Book",
             NOT_FOUND:"Book Not Found",
