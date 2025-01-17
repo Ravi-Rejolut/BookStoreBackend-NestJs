@@ -1,3 +1,4 @@
+import { Transform } from "class-transformer";
 import { IsEmail, IsNotEmpty, IsNumber, IsString } from "class-validator";
 
 
@@ -11,6 +12,7 @@ export class signupDto{
     @IsNotEmpty()
     @IsString()
     @IsEmail()
+    @Transform(({ value }) => value.toLowerCase())
     email: string;
 
     @IsNotEmpty()
@@ -27,6 +29,7 @@ export class loginDto{
     @IsNotEmpty()
     @IsString()
     @IsEmail()
+    @Transform(({ value }) => value.toLowerCase())
     email: string;
 
     @IsNotEmpty()

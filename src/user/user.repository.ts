@@ -2,12 +2,24 @@ import { Injectable } from "@nestjs/common";
 import { Prisma } from "@prisma/client";
 import { MESSAGE } from "src/constants/messages";
 import { PrismaService } from "src/prisma/prisma.service";
+import { cartWithCartItem } from "./dto/user.dto";
 
 @Injectable()
 export class UserRepository {
 
     constructor(private readonly prisma: PrismaService) { }
 
+
+    async getAllUsers(params: { where: Prisma.UserWhereInput, orderBy?: Prisma.SortOrder, skip?: number, take?: number, select?: Prisma.UserSelect }) {
+        try {
+
+            const users = await this.prisma.user.findMany({ where: params.where, skip: params.skip, take: params.take, select: params.select, orderBy: { createdAt: params.orderBy } });
+            return { users, count: users.length }
+
+        } catch (error) {
+            throw new Error(MESSAGE.ERROR.USER.FETCH_FAILED)
+        }
+    }
 
     async upsertCart(params: {
         data: Prisma.CartCreateInput
@@ -34,16 +46,16 @@ export class UserRepository {
             if (!cartItem) {
                 return await this.prisma.cartItem.create({ data: params.data })
             }
-           
+
         } catch (error) {
             throw error;
         }
 
     }
 
-    async getCart(params: { where: Prisma.CartWhereUniqueInput, select?: Prisma.CartSelect, include?: Prisma.CartInclude }) {
+    async getCart(params: { where: Prisma.CartWhereUniqueInput, select?: Prisma.CartSelect}) {
         try {
-            const cart = await this.prisma.cart.findMany({ ...params })
+            const cart = await this.prisma.cart.findUnique(params)
             return cart;
         } catch (error) {
             throw error
@@ -51,7 +63,7 @@ export class UserRepository {
 
     }
 
-    async updateCartItemQuantity(params:{where:Prisma.CartItemWhereInput,data:Prisma.CartItemUpdateInput}) {
+    async updateCartItemQuantity(params: { where: Prisma.CartItemWhereInput, data: Prisma.CartItemUpdateInput }) {
         try {
 
             const cartItem = await this.prisma.cartItem.findFirst({ where: params.where })
@@ -67,4 +79,31 @@ export class UserRepository {
         }
     }
 
+    async deleteCartItem(params: { where: Prisma.CartItemWhereUniqueInput }) {
+        try {
+            return await this.prisma.cartItem.delete({ where: params.where })
+        } catch (error) {
+            throw error
+        }
+    }
+
+    async addShippingDetails(params: { data }) {
+        try {
+            return await this.prisma.shipping.create({ ...params })
+        } catch (error) {
+            throw error
+        }
+    }
+
+    async getShippingDetails(params: { where: Prisma.ShippingWhereInput, select?: Prisma.ShippingSelect }) {
+
+        try {
+            
+            return await this.prisma.shipping.findMany({...params})
+
+            
+        } catch (error) {
+            throw error
+        }
+    }
 }

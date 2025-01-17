@@ -207,6 +207,7 @@ export class BookService {
   async getAllBooks(query: BookFetchDto) {
     try {
 
+      const {take,skip,orderBy}=query;
       let where: Prisma.BookWhereInput = {}
 
       if (query.author) {
@@ -243,7 +244,8 @@ export class BookService {
         }
       }
 
-      return await this.bookReposity.getAllBooks({ where });
+     const {books,count}=await this.bookReposity.getAllBooks({ where,take,skip,orderBy });
+     return {books,paginationCount:count}
     }
     catch (error) {
       console.log(error)

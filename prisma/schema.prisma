@@ -33,11 +33,11 @@ model Book {
   Author      Author       @relation(fields: [authorId], references: [id])
   authorId    String
   cartItem    CartItem[]
+  OrderItem   OrderItem[]
   Category    Category?    @relation(fields: [categoryId], references: [id])
   categoryId  String?
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
-  IssuedBook  IssuedBook[]
 }
 
 model BookPhotos {
@@ -58,15 +58,32 @@ model Author {
   Book        Book[]
 }
 
-model IssuedBook {
-  id         String   @id @default(uuid())
-  book       Book     @relation(fields: [bookId], references: [id])
-  bookId     String
-  user       User     @relation(fields: [userId], references: [id])
-  userId     String
-  returnDate DateTime
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+model Order {
+  id            String         @id @default(uuid())
+  invoiceNumber String         @unique
+  user          User           @relation(fields: [userId], references: [id])
+  userId        String
+  orderStatus   OrderStatus    @default(PENDING)
+  paymentSatus  PaymentSatatus @default(PENDING)
+  totalAmount   Float
+  OrderItem     OrderItem[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  shipping      Shipping       @relation(fields: [shippingId], references: [id])
+  shippingId    String
+}
+
+model OrderItem {
+  id        String   @id @default(uuid())
+  Book      Book     @relation(fields: [bookId], references: [id])
+  bookId    String
+  quantity  Int
+  Order     Order    @relation(fields: [orderId], references: [id])
+  orderId   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([orderId, bookId])
 }
 
 model User {
@@ -77,10 +94,27 @@ model User {
   role     Role   @default(USER)
   password String
 
-  createdAt  DateTime     @default(now())
-  updatedAt  DateTime     @updatedAt
-  IssuedBook IssuedBook[]
-  Cart       Cart?
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  Order     Order[]
+  Cart      Cart?
+  Shipping  Shipping[]
+}
+
+model Shipping {
+  id         String   @id() @default(uuid())
+  default    Boolean  @default(false)
+  address1   String
+  address2   String
+  city       String
+  state      String
+  country    String
+  postalCode String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  Order      Order[]
+  User       User     @relation(fields: [userId], references: [id])
+  userId     String
 }
 
 model Cart {
@@ -109,4 +143,16 @@ enum Role {
   ADMIN
   USER
   MANAGER
+}
+
+enum OrderStatus {
+  PENDING
+  PROCESSING
+  SHIPPED
+  DELIVERED
+}
+
+enum PaymentSatatus {
+  PENDING
+  PAID
 }

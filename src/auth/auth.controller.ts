@@ -9,6 +9,7 @@ export class AuthController {
 
   @Post("/signup")
   signup(@Body() body: signupDto) {
+
     return this.authService.signup(body);
   }
 

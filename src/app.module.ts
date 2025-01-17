@@ -13,6 +13,7 @@ import { ResponseInterceptor } from './interceptor/response.interceptor';
 import { BookModule } from './book/book.module';
 import { FileUploadModule } from './file-upload/file-upload.module';
 import { UserModule } from './user/user.module';
+import { OrderModule } from './order/order.module';
 
 @Module({
   imports: [
@@ -23,7 +24,7 @@ import { UserModule } from './user/user.module';
     JwtModule.register({
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: CONSTANT.TOKEN_EXPIRY },
-    }), AuthModule, UtilsModule, BookModule, FileUploadModule, UserModule],
+    }), AuthModule, UtilsModule, BookModule, FileUploadModule, UserModule, OrderModule],
   controllers: [AppController],
   providers: [AppService, UtilsService,
     

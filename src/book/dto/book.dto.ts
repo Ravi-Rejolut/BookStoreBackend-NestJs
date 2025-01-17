@@ -1,4 +1,5 @@
 import { IsBoolean, IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString, IsUUID } from "class-validator";
+import { PaginationDto } from "src/constants/dto";
 
 export class CreateCategoryDto {
 
@@ -107,7 +108,7 @@ export class CreateAuthorDto{
 }
 
 
-export class BookFetchDto{
+export class BookFetchDto extends PaginationDto{
 
     @IsString()
     @IsOptional()
@@ -132,4 +133,6 @@ export class BookFetchDto{
     @IsBoolean()
     @IsOptional()
     available:boolean
+
+   
 }

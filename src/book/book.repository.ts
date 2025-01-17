@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { Prisma } from "@prisma/client";
+import { count } from "console";
 import { MESSAGE } from "src/constants/messages";
 import { PrismaService } from "src/prisma/prisma.service";
 
@@ -139,12 +140,16 @@ export class BookRepository {
     }
     async getAllBooks(params: {
         where: Prisma.BookWhereInput,
+        take?:number,
+        skip?:number,
+        orderBy?:Prisma.SortOrder,
         select?: Prisma.BookSelect,
         include?: Prisma.BookInclude
 
     }) {
 
         let include = params.include ? params.include : { Author: true, Category: true, bookPhoto: true };
-        return await this.prisma.book.findMany({ ...params, include });
+        const books = await this.prisma.book.findMany({ ...params, include,orderBy:{createdAt:params.orderBy} });
+        return {books,count:books.length}
     }
 }

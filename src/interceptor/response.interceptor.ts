@@ -1,6 +1,7 @@
 import { BadRequestException, CallHandler, ExecutionContext, Injectable, NestInterceptor } from "@nestjs/common";
 import { MESSAGES } from "@nestjs/core/constants";
 import { catchError, map, Observable, of } from "rxjs";
+import { PageMetaData } from "src/constants/dto";
 import { MESSAGE } from "src/constants/messages";
 
 
@@ -30,6 +31,8 @@ export class ResponseInterceptor<T> implements NestInterceptor<T, ValidResponse<
     ): Promise<Observable<ValidResponse<T> | ErrorResponse>> {
 
         const request = context.switchToHttp().getRequest();
+         
+        const {page=1,take=10}=request.query;
 
 
         return next.handle().pipe(
@@ -41,11 +44,26 @@ export class ResponseInterceptor<T> implements NestInterceptor<T, ValidResponse<
                     throw new BadRequestException(MESSAGE.ERROR.SERVER_ERROR);
 
                 const statusCode = context.switchToHttp().getResponse().statusCode;
+
+                let result:any=res
+
+                if(!isNaN(res.paginationCount))
+                {
+                    const {paginationCount, ...data} = res;
+                    const pageMetaData=new PageMetaData({page,take,itemCount:paginationCount});
+                    result={
+                        ...data,
+                        pageMetaData
+                    }
+
+                }
+
+
                 const validResponse: ValidResponse<T> = {
                     success: true,
                     statusCode: statusCode,
                     message: message || MESSAGE.SUCCESS.DEFAULT,
-                    data: res
+                    data: result
                 }
 
                 return validResponse
