@@ -1,4 +1,5 @@
-import { IsBoolean, IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString, IsUUID } from "class-validator";
+import { Transform } from "class-transformer";
+import { IsBoolean, IsInt, IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString, IsUUID } from "class-validator";
 import { PaginationDto } from "src/constants/dto";
 
 export class CreateCategoryDto {
@@ -17,20 +18,24 @@ export class CreateBookDto {
 
     @IsNotEmpty()
     @IsNumber()
+    @Transform(val => parseInt(val.value, 10))
     rating: number
 
     @IsNotEmpty()
     @IsNumber()
+    @Transform(val => parseInt(val.value, 10))
     @IsPositive()
     price: number
 
 
     @IsNotEmpty()
     @IsBoolean()
+    @Transform(val => Boolean(val.value))
     available: boolean
 
     @IsNotEmpty()
     @IsNumber()
+    @Transform(val => parseInt(val.value, 10))
     quantity: number
 
     @IsNotEmpty()
@@ -39,14 +44,14 @@ export class CreateBookDto {
 
     @IsUUID()
     @IsNotEmpty()
-    authorId:string
+    authorId: string
 
     @IsUUID()
     @IsNotEmpty()
-    categoryId:string
+    categoryId: string
 
-    
-  
+
+
 }
 export class UpdateBookDto {
 
@@ -57,11 +62,13 @@ export class UpdateBookDto {
 
     @IsNotEmpty()
     @IsNumber()
+    @Transform(val => parseInt(val.value, 10))
     @IsOptional()
     rating: number
 
     @IsNotEmpty()
     @IsNumber()
+    @Transform(val => parseInt(val.value, 10))
     @IsPositive()
     @IsOptional()
     price: number
@@ -74,6 +81,7 @@ export class UpdateBookDto {
 
     @IsNotEmpty()
     @IsNumber()
+    @Transform(val => parseInt(val.value, 10))
     @IsOptional()
     quantity: number
 
@@ -85,54 +93,57 @@ export class UpdateBookDto {
     @IsUUID()
     @IsNotEmpty()
     @IsOptional()
-    authorId:string
+    authorId: string
 
     @IsUUID()
     @IsNotEmpty()
     @IsOptional()
-    categoryId:string
+    categoryId: string
 
-    
-  
+
+
 }
 
-export class CreateAuthorDto{
+export class CreateAuthorDto {
 
     @IsNotEmpty()
     @IsString()
-    name:string
+    name: string
 
     @IsNotEmpty()
     @IsString()
-    description:string
+    description: string
 }
 
 
-export class BookFetchDto extends PaginationDto{
+export class BookFetchDto extends PaginationDto {
 
     @IsString()
     @IsOptional()
-    category:string
+    category: string
 
     @IsString()
     @IsOptional()
-    author:string
+    author: string
 
     @IsNumber()
+    @Transform(val => parseInt(val.value, 10))
     @IsOptional()
-    rating:number
+    rating: number
 
     @IsNumber()
+    @Transform(val => parseInt(val.value, 10))
     @IsOptional()
-    price:number
+    price: number
 
     @IsNumber()
+    @Transform(val => parseInt(val.value, 10))
     @IsOptional()
-    search:string
+    search: string
 
     @IsBoolean()
     @IsOptional()
-    available:boolean
+    available: boolean
 
-   
+
 }
