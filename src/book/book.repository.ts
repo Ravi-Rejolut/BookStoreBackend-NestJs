@@ -150,6 +150,7 @@ export class BookRepository {
 
         let include = params.include ? params.include : { Author: true, Category: true, bookPhoto: true };
         const books = await this.prisma.book.findMany({ ...params, include,orderBy:{createdAt:params.orderBy} });
-        return {books,count:books.length}
+        const booksCount = await this.prisma.book.count({where:params.where});
+        return {books,count:booksCount}
     }
 }

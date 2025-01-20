@@ -77,6 +77,14 @@ export class UserController {
   {
     return await this.userService.addShippingDetails(req,body)
   }
+  @UseGuards(AuthGuard("jwt"))
+  @Patch("shipping/:addressId")
+  async updateShippingDetails(@Req() req:Request,@Body() body:AddressDto,@Param("addressId") addressId:string)
+  {
+    return await this.userService.updateShippingDetails(req,body,addressId);
+  }
+
+
 
 
   

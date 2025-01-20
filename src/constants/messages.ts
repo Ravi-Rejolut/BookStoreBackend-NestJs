@@ -7,8 +7,14 @@ export const MESSAGE={
             DELETED:"Book Deleted Successfully",
             SUCCESS_IMAGE_UPLOAD:"Image Uploaded Successfully",
         },
+        ORDER:{
+            CREATED:"Order Created Successfully",
+            UPDATED:"Order Updated Successfully",
+            CANCELLED:"Order Cancelled Successfully",
+        },
         SHIPPING:{
-            CREATED:"Shipping Address Created Successfully"
+            CREATED:"Shipping Address Created Successfully",
+            UPDATED:"Shipping Address Updated Successfully",
         },
         CART:{
             CREATED:"Cart Created Successfully",
@@ -33,8 +39,15 @@ export const MESSAGE={
         FILE:{
             UPLOAD_FAILED:"Error Uploading File"
         },
+        ORDER:{
+            CREATION_FAILED:"Error Creating Order",
+            FETCH_FAILED:"Error Fetching Order",
+            NOT_FOUND:"Order Not Found",
+            UPDATE_FAILED:"Order Update Failed"
+        },
         SHIPPING:{
-            CREATION_FAILED:"Error Creating Shipping Address"
+            CREATION_FAILED:"Error Creating Shipping Address",
+            UPDATE_FAILED:"Shipping Address Update Failed"
         },
         CART:{
             NOT_FOUND:"Cart Not Found",

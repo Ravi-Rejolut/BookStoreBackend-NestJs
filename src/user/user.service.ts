@@ -118,7 +118,7 @@ export class UserService {
 
     const {id}=req.user;
 
-    const addresses=await this.userRepository.getShippingDetails({where:{userId:id},select:{id:true,address1:true,address2:true,city:true,state:true,postalCode:true,country:true,createdAt:true,updatedAt:true,default:true}});
+    const addresses=await this.userRepository.getShippingDetails({where:{userId:id,isActive:true},select:{id:true,address1:true,address2:true,city:true,state:true,postalCode:true,country:true,createdAt:true,updatedAt:true,default:true}});
 
     return addresses;
 
@@ -134,6 +134,20 @@ export class UserService {
       
     } catch (error) {
       throw new Error(MESSAGE.ERROR.SHIPPING.CREATION_FAILED)
+    }
+  }
+
+  async updateShippingDetails(req,body:AddressDto,addressId:string)
+  {
+    try {
+    
+      await this.userRepository.updateShippingDetails({where:{id:addressId,userId:req.user.id},data:{isActive:false}});
+         
+      await this.addShippingDetails(req,body);
+
+      return MESSAGE.SUCCESS.SHIPPING.UPDATED;
+    } catch (error) {
+      throw new Error(MESSAGE.ERROR.SHIPPING.UPDATE_FAILED)
     }
   }
 

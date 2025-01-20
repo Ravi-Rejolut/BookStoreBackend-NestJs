@@ -53,7 +53,7 @@ export class UserRepository {
 
     }
 
-    async getCart(params: { where: Prisma.CartWhereUniqueInput, select?: Prisma.CartSelect}) {
+    async getCart(params: { where: Prisma.CartWhereUniqueInput, select?: Prisma.CartSelect }) {
         try {
             const cart = await this.prisma.cart.findUnique(params)
             return cart;
@@ -61,6 +61,17 @@ export class UserRepository {
             throw error
         }
 
+    }
+
+    async getCartItems(params: { where: Prisma.CartItemWhereInput, select?: Prisma.CartItemSelect, include?: Prisma.CartItemInclude }) {
+        try {
+            return await this.prisma.cartItem.findMany({ ...params })
+
+
+        } catch (error) {
+            throw error
+
+        }
     }
 
     async updateCartItemQuantity(params: { where: Prisma.CartItemWhereInput, data: Prisma.CartItemUpdateInput }) {
@@ -95,13 +106,21 @@ export class UserRepository {
         }
     }
 
+    async updateShippingDetails(params: { where: Prisma.ShippingWhereUniqueInput, data: Prisma.ShippingUpdateInput }) {
+        try {
+            return await this.prisma.shipping.update({ where: params.where, data: params.data })
+        } catch (error) {
+            throw new Error(MESSAGE.ERROR.SHIPPING.UPDATE_FAILED)
+        }
+    }
+
     async getShippingDetails(params: { where: Prisma.ShippingWhereInput, select?: Prisma.ShippingSelect }) {
 
         try {
-            
-            return await this.prisma.shipping.findMany({...params})
 
-            
+            return await this.prisma.shipping.findMany({ ...params })
+
+
         } catch (error) {
             throw error
         }
