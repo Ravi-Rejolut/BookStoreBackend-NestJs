@@ -14,6 +14,7 @@ import { BookModule } from './book/book.module';
 import { FileUploadModule } from './file-upload/file-upload.module';
 import { UserModule } from './user/user.module';
 import { OrderModule } from './order/order.module';
+import { NotificationsModule } from './notifications/notifications.module';
 
 @Module({
   imports: [
@@ -24,7 +25,7 @@ import { OrderModule } from './order/order.module';
     JwtModule.register({
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: CONSTANT.TOKEN_EXPIRY },
-    }), AuthModule, UtilsModule, BookModule, FileUploadModule, UserModule, OrderModule],
+    }), AuthModule, UtilsModule, BookModule, FileUploadModule, UserModule, OrderModule, NotificationsModule],
   controllers: [AppController],
   providers: [AppService, UtilsService,
     

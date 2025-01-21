@@ -12,6 +12,10 @@ export const configData = (configService: ConfigService) => ({
     AWS_REGION:configService.get <string>("AWS_REGION"),
     AWS_ACCESS_KEY_ID:configService.get <string>("AWS_ACCESS_KEY_ID"),
     AWS_SECRET_ACCESS_KEY:configService.get <string>("AWS_SECRET_ACCESS_KEY"),
+    FIREBASE_PRIVATE_KEY:configService.get <string>("FIREBASE_PRIVATE_KEY"),
+    FIREBASE_CLIENT_EMAIL:configService.get <string>("FIREBASE_CLIENT_EMAIL"),
+    FIREBASE_PROJECT_ID:configService.get <string>("FIREBASE_PROJECT_ID"),
+    
 })
 
 class RequiredVariable{
@@ -54,6 +58,22 @@ class RequiredVariable{
     @IsString()
     @IsNotEmpty()
     AWS_SECRET_ACCESS_KEY: string
+
+
+    @Expose()
+    @IsString()
+    @IsNotEmpty()
+    FIREBASE_PRIVATE_KEY: string
+
+    @Expose()
+    @IsString()
+    @IsNotEmpty()
+    FIREBASE_CLIENT_EMAIL: string
+
+    @Expose()
+    @IsString()
+    @IsNotEmpty()
+    FIREBASE_PROJECT_ID: string
 }
 
 

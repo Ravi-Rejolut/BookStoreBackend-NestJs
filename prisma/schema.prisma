@@ -99,6 +99,16 @@ model User {
   Order     Order[]
   Cart      Cart?
   Shipping  Shipping[]
+  FCMToken  FCMToken[]
+}
+
+model FCMToken {
+  token     String   @unique
+  User      User     @relation(fields: [userId], references: [id])
+  userId    String
+  createdId DateTime @default(now())
+
+  @@id([userId, token])
 }
 
 model Shipping {
