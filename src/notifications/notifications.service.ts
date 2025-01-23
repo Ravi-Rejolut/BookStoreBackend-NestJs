@@ -31,13 +31,15 @@ export class NotificationsService {
 
       const tokens=await this.notificationRepository.getFCMTokens(orderId)
 
-      admin.messaging().sendEachForMulticast({
+      const data=admin.messaging().sendEachForMulticast({
         tokens,
         notification: {
           title,
           body: message,
         },
       })
+
+      return true;
       
     } catch (error) {
       throw error;
