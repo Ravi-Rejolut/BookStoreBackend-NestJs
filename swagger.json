@@ -1,0 +1,1198 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/api/v1": {
+      "get": {
+        "description": "Returns a simple greeting message.",
+        "operationId": "AppController_getHello",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "The greeting message was successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": "Hello World!"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get Hello Message",
+        "tags": [
+          "App"
+        ]
+      }
+    },
+    "/api/v1/auth/signup": {
+      "post": {
+        "operationId": "AuthController_signup",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "description": "Signup details",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/signupDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User successfully signed up."
+          },
+          "400": {
+            "description": "Invalid request payload."
+          }
+        },
+        "summary": "User signup",
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/api/v1/auth/login": {
+      "post": {
+        "operationId": "AuthController_login",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "description": "Login details",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/loginDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User successfully logged in."
+          },
+          "401": {
+            "description": "Invalid credentials."
+          }
+        },
+        "summary": "User login",
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/api/v1/book/category": {
+      "post": {
+        "operationId": "BookController_createCategory",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCategoryDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Category created successfully"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Create a new category",
+        "tags": [
+          "Book"
+        ]
+      },
+      "get": {
+        "operationId": "BookController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Returns all categories"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get all categories",
+        "tags": [
+          "Book"
+        ]
+      }
+    },
+    "/api/v1/book/category/{id}": {
+      "patch": {
+        "operationId": "BookController_updateCategory",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCategoryDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Category updated successfully"
+          },
+          "404": {
+            "description": "Category not found"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Update a category by ID",
+        "tags": [
+          "Book"
+        ]
+      }
+    },
+    "/api/v1/book/author": {
+      "post": {
+        "operationId": "BookController_createAuthor",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateAuthorDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Author created successfully"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Create a new author",
+        "tags": [
+          "Book"
+        ]
+      },
+      "get": {
+        "operationId": "BookController_getAuthors",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Returns all authors"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get all authors",
+        "tags": [
+          "Book"
+        ]
+      }
+    },
+    "/api/v1/book": {
+      "post": {
+        "operationId": "BookController_createBook",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBookDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Book created successfully"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Create a new book with images",
+        "tags": [
+          "Book"
+        ]
+      }
+    },
+    "/api/v1/book/{id}": {
+      "patch": {
+        "operationId": "BookController_updateBook",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBookDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Book updated successfully"
+          },
+          "404": {
+            "description": "Book not found"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Update book details by ID",
+        "tags": [
+          "Book"
+        ]
+      },
+      "get": {
+        "operationId": "BookController_getBookById",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns book details"
+          },
+          "404": {
+            "description": "Book not found"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get book details by ID",
+        "tags": [
+          "Book"
+        ]
+      }
+    },
+    "/api/v1/book/image/{id}": {
+      "delete": {
+        "operationId": "BookController_deleteImage",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Image deleted successfully"
+          },
+          "404": {
+            "description": "Image not found"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Delete an image by ID",
+        "tags": [
+          "Book"
+        ]
+      }
+    },
+    "/api/v1/book/{id}/image": {
+      "post": {
+        "operationId": "BookController_addBookImage",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Images added successfully"
+          },
+          "404": {
+            "description": "Book not found"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Add images to a book",
+        "tags": [
+          "Book"
+        ]
+      }
+    },
+    "/api/v1/book/all": {
+      "get": {
+        "operationId": "BookController_getAllBooks",
+        "parameters": [
+          {
+            "name": "category",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "author",
+            "required": false,
+            "in": "query",
+            "description": "Filter by author",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "rating",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "price",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "search",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "available",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Number of books per page",
+            "schema": {}
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Page number",
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns a list of books"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get all books with optional filters",
+        "tags": [
+          "Book"
+        ]
+      }
+    },
+    "/api/v1/user/me": {
+      "get": {
+        "operationId": "UserController_getMe",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Returns user details"
+          },
+          "401": {
+            "description": "Unauthorized access"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get details of the logged-in user",
+        "tags": [
+          "User"
+        ]
+      }
+    },
+    "/api/v1/user/all": {
+      "get": {
+        "operationId": "UserController_getAllUser",
+        "parameters": [
+          {
+            "name": "search",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "role",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Number of users per page",
+            "schema": {}
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Page number for pagination",
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns a list of users"
+          },
+          "403": {
+            "description": "Forbidden for non-admin users"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get all users with optional filters",
+        "tags": [
+          "User"
+        ]
+      }
+    },
+    "/api/v1/user/cart": {
+      "post": {
+        "operationId": "UserController_addToCart",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CartDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Item added to the cart successfully"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Add an item to the cart",
+        "tags": [
+          "User"
+        ]
+      },
+      "patch": {
+        "operationId": "UserController_updateCartItem",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CartDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Cart item updated successfully"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Update an item in the cart",
+        "tags": [
+          "User"
+        ]
+      },
+      "get": {
+        "operationId": "UserController_getCart",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Returns cart details"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get the items in the cart",
+        "tags": [
+          "User"
+        ]
+      }
+    },
+    "/api/v1/user/cart/{id}": {
+      "delete": {
+        "operationId": "UserController_removeItemFromCart",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cart item removed successfully"
+          },
+          "404": {
+            "description": "Cart item not found"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Remove an item from the cart",
+        "tags": [
+          "User"
+        ]
+      }
+    },
+    "/api/v1/user/shippings": {
+      "get": {
+        "operationId": "UserController_getShippings",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Returns shipping details"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get all shipping details of the logged-in user",
+        "tags": [
+          "User"
+        ]
+      }
+    },
+    "/api/v1/user/shipping": {
+      "post": {
+        "operationId": "UserController_addShippingDetails",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddressDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Shipping details added successfully"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Add shipping details",
+        "tags": [
+          "User"
+        ]
+      }
+    },
+    "/api/v1/user/shipping/{addressId}": {
+      "patch": {
+        "operationId": "UserController_updateShippingDetails",
+        "parameters": [
+          {
+            "name": "addressId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddressDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Shipping details updated successfully"
+          },
+          "404": {
+            "description": "Shipping address not found"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Update shipping details by ID",
+        "tags": [
+          "User"
+        ]
+      }
+    },
+    "/api/v1/order": {
+      "post": {
+        "operationId": "OrderController_createOrder",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOrderDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Order created successfully"
+          },
+          "400": {
+            "description": "Invalid request payload"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Create a new order",
+        "tags": [
+          "Order"
+        ]
+      },
+      "get": {
+        "operationId": "OrderController_getOrders",
+        "parameters": [
+          {
+            "name": "search",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "orderStatus",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "paymentStatus",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Number of orders per page",
+            "schema": {}
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Page number for pagination",
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns a list of orders"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Fetch orders with optional filters",
+        "tags": [
+          "Order"
+        ]
+      }
+    },
+    "/api/v1/order/status/{OrderId}": {
+      "patch": {
+        "operationId": "OrderController_updateOrderStatus",
+        "parameters": [
+          {
+            "name": "OrderId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateOrderStatus"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Order status updated successfully"
+          },
+          "403": {
+            "description": "Forbidden for unauthorized roles"
+          },
+          "404": {
+            "description": "Order not found"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Update the status of an order",
+        "tags": [
+          "Order"
+        ]
+      }
+    },
+    "/api/v1/order/{OrderId}": {
+      "get": {
+        "operationId": "OrderController_getOrdersByOrderId",
+        "parameters": [
+          {
+            "name": "OrderId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns order details"
+          },
+          "404": {
+            "description": "Order not found"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Fetch order details by order ID",
+        "tags": [
+          "Order"
+        ]
+      }
+    },
+    "/api/v1/notifications/fcm": {
+      "post": {
+        "operationId": "NotificationsController_checkFCMToken",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FCMTokensDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "FCM token checked or registered successfully"
+          },
+          "400": {
+            "description": "Invalid request payload"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Check or register an FCM token for the current user",
+        "tags": [
+          "Notifications"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Book API Documentation",
+    "description": "The Book API provides a comprehensive set of endpoints for managing books, categories, authors, and users in a book management system. This API supports the ability to perform CRUD operations on books, handle user authentication, and manage categories and authors. It is designed to be scalable, secure, and easy to integrate with various client applications. ",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "signupDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "email",
+          "password",
+          "phone"
+        ]
+      },
+      "loginDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
+      },
+      "CreateCategoryDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "CreateAuthorDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "description"
+        ]
+      },
+      "CreateBookDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "rating": {
+            "type": "number"
+          },
+          "price": {
+            "type": "number"
+          },
+          "available": {
+            "type": "boolean"
+          },
+          "quantity": {
+            "type": "number"
+          },
+          "description": {
+            "type": "string"
+          },
+          "authorId": {
+            "type": "string"
+          },
+          "categoryId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "rating",
+          "price",
+          "available",
+          "quantity",
+          "description",
+          "authorId",
+          "categoryId"
+        ]
+      },
+      "UpdateBookDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "rating": {
+            "type": "number"
+          },
+          "price": {
+            "type": "number"
+          },
+          "available": {
+            "type": "boolean"
+          },
+          "quantity": {
+            "type": "number"
+          },
+          "description": {
+            "type": "string"
+          },
+          "authorId": {
+            "type": "string"
+          },
+          "categoryId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "rating",
+          "price",
+          "available",
+          "quantity",
+          "description",
+          "authorId",
+          "categoryId"
+        ]
+      },
+      "CartDto": {
+        "type": "object",
+        "properties": {
+          "bookId": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "bookId",
+          "quantity"
+        ]
+      },
+      "AddressDto": {
+        "type": "object",
+        "properties": {
+          "address1": {
+            "type": "string"
+          },
+          "address2": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "postalCode": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "address1",
+          "address2",
+          "city",
+          "state",
+          "country",
+          "postalCode"
+        ]
+      },
+      "CreateOrderDto": {
+        "type": "object",
+        "properties": {
+          "shippingId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "shippingId"
+        ]
+      },
+      "UpdateOrderStatus": {
+        "type": "object",
+        "properties": {
+          "orderStatus": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "orderStatus"
+        ]
+      },
+      "FCMTokensDto": {
+        "type": "object",
+        "properties": {
+          "oldFCMToken": {
+            "type": "string"
+          },
+          "newFCMToken": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "oldFCMToken",
+          "newFCMToken"
+        ]
+      }
+    }
+  }
+}
